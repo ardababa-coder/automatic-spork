@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EBA - Ardababa Akademi</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+body{background:#f0f4f8}
+#login{position:fixed;inset:0;background:linear-gradient(135deg,#0f6fc5,#00b7ff);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px}
+.box{background:#fff;width:100%;max-width:380px;padding:28px;border-radius:20px;text-align:center;box-shadow:0 20px 50px #0003}
+.box input{width:100%;padding:13px;border:1.5px solid #ddd;border-radius:10px;margin:7px 0;font-size:15px}
+.box button{width:100%;padding:13px;background:#0f6fc5;color:#fff;border:0;border-radius:10px;font-weight:800;font-size:16px;margin-top:10px}
+.top{background:#0f6fc5;color:#fff;display:flex;justify-content:space-between;padding:12px 18px;position:sticky;top:0;z-index:50}
+.lgs{background:#d32f2f;color:#fff;text-align:center;padding:9px;font-weight:bold;font-size:14px}
+.menu{display:flex;gap:8px;padding:12px;background:#fff;overflow:auto;white-space:nowrap}
+.menu button{border:0;padding:8px 15px;border-radius:20px;background:#eef2f7;font-weight:700}
+.menu button.active{background:#0f6fc5;color:#fff}
+.grid{max-width:1100px;margin:auto;padding:15px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 14px #0001}
+.card img{width:100%;height:150px;object-fit:cover}
+.ic{padding:12px}
+.b{font-size:11px;background:#e3f2fd;color:#0f6fc5;padding:4px 8px;border-radius:20px;font-weight:800}
+.btn{width:100%;padding:11px;border:0;border-radius:10px;background:#0f6fc5;color:#fff;font-weight:800;margin-top:8px}
+</style></head>
+<body>
+<div id="login"><div class="box">
+<h1 style="color:#0f6fc5">EBA</h1><h3>Ardababa Akademi</h3><p style="color:#666;font-size:13px;margin:8px 0 14px">EBA'daki her şey burada!</p>
+<input id="ad" placeholder="Ad Soyad - örn: Arda">
+<input id="sf" type="password" placeholder="Şifre - örn: 1234">
+<button onclick="giris()">Giriş Yap ▶</button>
+<p style="font-size:11px;color:#888;margin-top:12px">İstediğini yaz, giriş yapar. Demo sitedir.</p>
+</div></div>
+
+<div class="top"><b id="kisi">EBA</b><button onclick="localStorage.clear();location.reload()" style="background:#fff;color:#0f6fc5;border:0;padding:6px 12px;border-radius:20px;font-weight:800">Çıkış</button></div>
+<div class="lgs" id="lgs">Yükleniyor...</div>
+<div class="menu">
+<button class="active" onclick="f('hepsi',this)">Ana Sayfa</button>
+<button onclick="f('ders',this)">📚 Dersler</button>
+<button onclick="f('canli',this)">🔴 Canlı Ders</button>
+<button onclick="f('kutuphane',this)">📖 Kütüphane</button>
+<button onclick="f('sinav',this)">📝 Sınavlar</button>
+<button onclick="f('8',this)">8.Sınıf LGS</button>
+</div>
+<div class="grid" id="grid"></div>
+<!DOCTYPE html>
+<html lang="tr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EBA - Ardababa Akademi</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+body{background:#f0f4f8}
+#login{position:fixed;inset:0;background:linear-gradient(135deg,#0f6fc5,#00b7ff);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px}
+.box{background:#fff;width:100%;max-width:380px;padding:28px;border-radius:20px;text-align:center;box-shadow:0 20px 50px #0003}
+.box input{width:100%;padding:13px;border:1.5px solid #ddd;border-radius:10px;margin:7px 0;font-size:15px}
+.box button{width:100%;padding:13px;background:#0f6fc5;color:#fff;border:0;border-radius:10px;font-weight:800;font-size:16px;margin-top:10px}
+.top{background:#0f6fc5;color:#fff;display:flex;justify-content:space-between;padding:12px 18px;position:sticky;top:0;z-index:50}
+.lgs{background:#d32f2f;color:#fff;text-align:center;padding:9px;font-weight:bold;font-size:14px}
+.menu{display:flex;gap:8px;padding:12px;background:#fff;overflow:auto;white-space:nowrap}
+.menu button{border:0;padding:8px 15px;border-radius:20px;background:#eef2f7;font-weight:700}
+.menu button.active{background:#0f6fc5;color:#fff}
+.grid{max-width:1100px;margin:auto;padding:15px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 14px #0001}
+.card img{width:100%;height:150px;object-fit:cover}
+.ic{padding:12px}
+.b{font-size:11px;background:#e3f2fd;color:#0f6fc5;padding:4px 8px;border-radius:20px;font-weight:800}
+.btn{width:100%;padding:11px;border:0;border-radius:10px;background:#0f6fc5;color:#fff;font-weight:800;margin-top:8px}
+</style></head>
+<body>
+<div id="login"><div class="box">
+<h1 style="color:#0f6fc5">EBA</h1><h3>Ardababa Akademi</h3><p style="color:#666;font-size:13px;margin:8px 0 14px">EBA'daki her şey burada!</p>
+<input id="ad" placeholder="Ad Soyad - örn: Arda">
+<input id="sf" type="password" placeholder="Şifre - örn: 1234">
+<button onclick="giris()">Giriş Yap ▶</button>
+<p style="font-size:11px;color:#888;margin-top:12px">İstediğini yaz, giriş yapar. Demo sitedir.</p>
+</div></div>
+
+<div class="top"><b id="kisi">EBA</b><button onclick="localStorage.clear();location.reload()" style="background:#fff;color:#0f6fc5;border:0;padding:6px 12px;border-radius:20px;font-weight:800">Çıkış</button></div>
+<div class="lgs" id="lgs">Yükleniyor...</div>
+<div class="menu">
+<button class="active" onclick="f('hepsi',this)">Ana Sayfa</button>
+<button onclick="f('ders',this)">📚 Dersler</button>
+<button onclick="f('canli',this)">🔴 Canlı Ders</button>
+<button onclick="f('kutuphane',this)">📖 Kütüphane</button>
+<button onclick="f('sinav',this)">📝 Sınavlar</button>
+<button onclick="f('8',this)">8.Sınıf LGS</button>
+</div>
+<div class="grid" id="grid"></div>
+
+<script>
+let data=[
+{kat:'canli',sinif:'8',ad:'🔴 CANLI - LGS Matematik Kampı (Bugün 20:00)',img:'https://images.unsplash.com/photo-1588075592446-265fd1e6e76f'},
+{kat:'ders',sinif:'8',ad:'Matematik - Çarpanlar ve Katlar',img:'https://images.unsplash.com/photo-1635070041078-e363dbe005cb'},
+{kat:'ders',sinif:'8',ad:'Fen - DNA ve Genetik Kod',img:'https://images.unsplash.com/photo
+<script>
+let data=[
+{kat:'canli',sinif:'8',ad:'🔴 CANLI - LGS Matematik Kampı (Bugün 20:00)',img:'https://images.unsplash.com/photo-1588075592446-265fd1e6e76f'},
+{kat:'ders',sinif:'8',ad:'Matematik - Çarpanlar ve Katlar',img:'https://images.unsplash.com/photo-1635070041078-e363dbe005cb'},
