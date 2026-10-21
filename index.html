@@ -1,27 +1,81 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EBA</title>
-<style>body{margin:0;font-family:sans-serif;background:#f1f5f9}.top{background:#0b6fc2;color:#fff;padding:12px;text-align:center;font-weight:900;font-size:20px}.card{background:#fff;margin:10px;padding:12px;border-radius:12px}.btn{background:#0b6fc2;color:#fff;border:0;padding:12px;width:100%;border-radius:10px;font-weight:800;font-size:16px;margin-top:8px}</style>
-</head>
+<html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EBA - Eğitim Bilişim Ağı</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#f5f5f5}
+.ust{background:#e30613;color:#fff;padding:10px 14px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
+.ust b{font-size:26px;letter-spacing:1px} .ust span{font-size:12px;opacity:.9}
+.ara{margin-left:auto;background:#fff;border-radius:20px;padding:6px 12px;color:#999;font-size:13px;width:120px}
+.menu{background:#fff;display:flex;overflow:auto;white-space:nowrap;border-bottom:1px solid #ddd;position:sticky;top:50px;z-index:9}
+.menu button{border:0;background:#fff;padding:14px 18px;font-weight:700;color:#666;border-bottom:3px solid transparent}
+.menu button.aktif{color:#e30613;border-color:#e30613}
+.sayfa{display:none;padding:12px}.sayfa.aktif{display:block}
+.kart{background:#fff;border-radius:8px;padding:12px;margin-bottom:12px;box-shadow:0 1px 4px #0001;display:flex;gap:12px;align-items:center}
+.kart img{width:64px;height:64px;border-radius:8px;object-fit:cover}
+.kart .ic{flex:1}.kart .ic b{font-size:15px}.kart .ic p{margin:4px 0;color:#666;font-size:12px}
+.btn-kirmizi{background:#e30613;color:#fff;border:0;padding:8px 16px;border-radius:20px;font-weight:700;font-size:13px}
+.btn-mavi{background:#2196f3;color:#fff;border:0;padding:8px 16px;border-radius:20px;font-weight:700;font-size:13px}
+.buyuk-kart{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px #0001;margin-bottom:12px}
+.buyuk-kart img{width:100%;height:160px;object-fit:cover}
+.buyuk-kart .ic{padding:12px}
+.video{width:100%;height:200px;border:0;border-radius:8px}
+.soru{border:1px solid #ddd;padding:10px;border-radius:8px;margin:8px 0;background:#fff}
+</style></head>
 <body>
-<div class="top">EBA - ARDABABA AKADEMI</div>
 
-<div class="card">
-<b>Matematik</b>
-<button class="btn" onclick="document.getElementById('alan').innerHTML='<h2>Matematik Dersi Başladı!</h2><iframe width=100% height=200 src=https://www.youtube.com/embed/3h7dD2yN1eU></iframe><br><button class=btn onclick=alert(`Doğru! Tebrikler`)>12 ve 18 in EBOB u kaç? Cevap: 6 (Tıkla)</button>'">DERSİ AÇ ▶</button>
+<div class="ust">
+<div style="background:#fff;color:#e30613;width:42px;height:42px;border-radius:8px;display:grid;place-items:center;font-weight:900;font-size:20px">E</div>
+<div><b>EBA</b><br><span>Eğitim Bilişim Ağı</span></div>
+<div class="ara">🔍 Ara...</div>
+<div style="margin-left:8px;background:#fff;color:#e30613;border-radius:50%;width:32px;height:32px;display:grid;place-items:center;font-weight:900">A</div>
 </div>
 
-<div class="card">
-<b>Fen</b>
-<button class="btn" onclick="document.getElementById('alan').innerHTML='<h2>Fen Dersi</h2><p>DNA çift sarmal!</p><button class=btn onclick=alert(`Harika!`)>Anladım de</button>'">DERSİ AÇ ▶</button>
+<div class="menu">
+<button id="m-ana" class="aktif" onclick="git('ana')">Ana Sayfa</button>
+<button id="m-ders" onclick="git('ders')">Dersler</button>
+<button id="m-odev" onclick="git('odev')">Ödevler</button>
+<button id="m-sinav" onclick="git('sinav')">Sınavlar</button>
+<button id="m-kutup" onclick="git('kutup')">Kütüphane</button>
 </div>
 
-<div class="card">
-<b>LGS Deneme</b>
-<button class="btn" onclick="document.getElementById('alan').innerHTML='<h2>5² kaç? 25</h2><button class=btn onclick=alert(`100 Puan Aldın!` )>Cevapla</button>'">SINAVI AÇ ▶</button>
+<!-- ANA SAYFA GERÇEK EBA GİBİ -->
+<div id="s-ana" class="sayfa aktif">
+<div style="background:#e30613;color:#fff;border-radius:12px;padding:14px;margin-bottom:12px">
+<div style="font-size:13px">LGS 2027</div><div style="font-size:22px;font-weight:900" id="lgs">⏳ 236 Gün Kaldı</div><div style="font-size:12px;margin-top:6px">Hedefini unutma Arda! 💪</div>
 </div>
 
-<div id="alan" class="card" style="background:#fffde7"><b>Burada ders açılacak...</b><br>Düğmeye bas, aşağıda ders gelecek!</div>
+<div class="buyuk-kart">
+<img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600">
+<div class="ic"><b>Canlı Dersler Başladı!</b><p>8. Sınıf Matematik - Çarpanlar ve Katlar</p><button class="btn-kirmizi" onclick="git('ders')">Canlı Derse Katıl ▶</button></div>
+</div>
 
-<script>alert('Site açıldı! Şimdi düğmeler çalışacak');</script>
-</body></html>
+<div class="kart"><img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=200"><div class="ic"><b>Matematik</b><p>Bugün 2 ödevin var</p></div><button class="btn-mavi" onclick="git('ders')">Devam Et</button></div>
+<div class="kart"><img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=200"><div class="ic"><b>Fen Bilimleri</b><p>DNA ve Genetik Kod</p></div><button class="btn-mavi" onclick="git('ders')">Devam Et</button></div>
+<div class="kart"><img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=200"><div class="ic"><b>Türkçe</b><p>Fiilimsiler Konusu</p></div><button class="btn-mavi" onclick="git('ders')">Devam Et</button></div>
+</div>
+
+<!-- DERSLER -->
+<div id="s-ders" class="sayfa">
+<div id="dersListe"></div>
+<div id="dersDetay" style="display:none"></div>
+</div>
+
+<!-- ODEVLER -->
+<div id="s-odev" class="sayfa">
+<div class="kart"><div class="ic"><b>Matematik Ödevi</b><p>Çarpanlar Testi - Son Tarih: Yarın</p></div><button class="btn-kirmizi" onclick="alert('Ödev Açıldı! Testi çözebilirsin')">Yap</button></div>
+<div class="kart"><div class="ic"><b>Fen Ödevi</b><p>DNA Soruları</p></div><button class="btn-kirmizi" onclick="alert('Fen ödevi açıldı')">Yap</button></div>
+</div>
+
+<!-- SINAVLAR -->
+<div id="s-sinav" class="sayfa">
+<div class="buyuk-kart"><div class="ic"><h3 style="margin:0">LGS Deneme Sınavı - 20dk</h3><p>5 Soru - Gerçek Sınav Gibi</p><div id="sinav"></div><button class="btn-kirmizi" onclick="sinavBaslat()">Sınavı Başlat</button><p id="puan" style="font-weight:900"></p></div></div>
+</div>
+
+<!-- KUTUPHANE -->
+<div id="s-kutup" class="sayfa">
+<div class="kart"><div class="ic"><b>📖 EBA Kütüphane</b><p>MEB Ders Kitapları</p></div><button class="btn-mavi" onclick="window.open('https://eba.gov.tr/kutuphane','_blank')">AÇ</button></div>
+<div class="buyuk-kart"><img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600"><div class="ic"><b>Motivasyon</b><iframe class="video" src="https://www.youtube.com/embed/5MgBikgcWnY"></iframe></div></div>
+</div>
+
+<script>
+function git(isim){document.querySelectorAll('.sayfa').forEach(s=>s.classList.remove('aktif'));document.querySelectorAll('.menu button').for
