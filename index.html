@@ -1,1 +1,88 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EBA</title><style>body{margin:0;font-family:Arial;background:#f2f2f2}button{padding:10px;border:0;border-radius:10px;font-weight:800} .m{display:flex} .m button{flex:1;background:#fff} .m button.on{color:red;border-bottom:3px solid red} .p{display:none;padding:10px} .p.on{display:block} .card{background:#fff;padding:10px;border-radius:10px;margin-bottom:8px}</style></head><body><div style="background:#fff;padding:10px"><b>EBA ARDABABA 5-8</b></div><div class="m"><button id="m1" class="on" onclick="g(1)">Ana</button><button id="m2" onclick="g(2)">Ders</button><button id="m3" onclick="g(3)">Sinav</button></div><div id="p1" class="p on"><button onclick="c=5;u()">5</button><button onclick="c=6;u()">6</button><button onclick="c=7;u()">7</button><button onclick="c=8;u()">8</button><div class="card"><h2 id="t">5.Sinif</h2><p id="pr">0/4</p></div><div id="a"></div></div><div id="p2" class="p"></div><div id="p3" class="p"><div id="sb"></div><button style="background:red;color:#fff;width:100%;padding:10px;border-radius:20px" onclick="sbx()">Baslat</button><h2 id="pu"></h2></div><script>var c=5;var d={5:["Kesirler","Gunes","Deyimler","Haklar"],6:["Tam Sayi","Yogunluk","Fiiller","Tarih"],7:["Oran","Hucre","Cumle","Osmanli"],8:["Carpanlar","DNA","Fiilimsi","Inkilap"]};var b={"5":[],"6":[],"7":[],"8":[]};function g(n){for(i=1;i<=3;i++){document.getElementById("p"+i).classList.remove("on");document.getElementById("m"+i).classList.remove("on");}document.getElementById("p"+n).classList.add("on");document.getElementById("m"+n).classList.add("on");}function u(){document.getElementById("t").innerText=c+".Sinif";var h="";for(i=0;i<d[c].length;i++){h+='<div class="card"><b>'+d[c][i]+'</b><button style="background:#0b6fc2;color:#fff;width:100%;margin-top:5px" onclick="window.open(\'https://youtu.be/9TslrA8a3kA\',\'_blank\')">Video</button><button style="background:red;color:#fff;width:100%;margin-top:5px" onclick="bt('+i+')">Bitir</button></div>';}document.getElementById("a").innerHTML=h;document.getElementById("p2").innerHTML=h;r();}function r(){document.getElementById("pr").innerText=(b[c].length)+"/"+d[c].length;}function bt(i){if(b[c].indexOf(i)<0)b[c].push(i);r();alert("Bitti");}function sbx(){document.getElementById("sb").innerHTML='<div class="card">5 karesi?<br><button onclick="ok(1)">25</button> <button onclick="ok(0)">10</button></div><div class="card">H2O?<br><button onclick="ok(1)">Su</button> <button onclick="ok(0)">Tuz</button></div>';}function ok(x){if(x)document.getElementById("pu").innerText="Puan 100";}u();</script></body></html>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EBA V10^300</title>
+<style>
+*{box-sizing:border-box;font-family:Arial} body{margin:0;background:#0f172a;color:white;padding-bottom:80px}
+.top{background:linear-gradient(90deg,#7c3aed,#db2777);padding:15px;text-align:center;border-radius:0 0 20px 20px}
+.top h1{margin:0;font-size:22px} .top p{margin:5px 0}
+.card{background:#1e293b;margin:12px;padding:15px;border-radius:15px}
+button{background:#7c3aed;color:white;border:0;padding:10px 15px;border-radius:10px;margin:5px;cursor:pointer;font-weight:bold}
+input,select{padding:10px;border-radius:10px;border:0;width:100%;margin:5px 0;color:black}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#111827;display:flex;justify-content:space-around;padding:10px 0}
+.nav button{background:none;font-size:13px} .nav button.active{color:#facc15}
+.page{display:none} .page.active{display:block}
+.pet{font-size:50px;text-align:center} .shop-item{background:#334155;padding:10px;border-radius:10px;margin:8px 0}
+</style>
+</head>
+<body>
+
+<div class="top">
+<h1>EBA V10^300</h1>
+<p>⭐ Puan: 5e+99 | 🪙 <span id="coin">1000</span></p>
+<p>👤 ARDA | Sınıf: <select id="sinif" style="width:80px;display:inline"><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></p>
+</div>
+
+<div id="p-ana" class="page active">
+<div class="card"><h3>🎁 Kod Gir - Ödül Al</h3><input id="kodInput" placeholder="Kodunu yaz örn: ARDA10000"><button onclick="kodKullan()">Ödül Al +20</button><p id="kodSonuc"></p></div>
+<div class="card"><h3>🐾 ArdaPet</h3><div class="pet" id="petEmoji">🐶</div><p id="petDurum">Mutluluk: 100 | Açlık: 20</p><button onclick="petBesle()">🍖 Besle</button><button onclick="petSev()">❤️ Sev</button><button onclick="petDegistir()">🔄 Pet Değiştir</button></div>
+<div class="card"><h3>🏆 Liderlik Tablosu</h3><p>1. ARDA - 5e+99 ⭐</p><p>2. Efe - 12.400</p><p>3. Elif - 9.800</p><p>4. Mert - 7.200</p></div>
+</div>
+
+<div id="p-ders" class="page">
+<div class="card"><h3>📚 Dersler</h3><button onclick="dersAc('Matematik')">📐 Matematik</button><button onclick="dersAc('Türkçe')">📖 Türkçe</button><button onclick="dersAc('Fen Bilimleri')">🔬 Fen Bilimleri</button><button onclick="dersAc('İngilizce')">🇬🇧 İngilizce</button><button onclick="dersAc('Sosyal')">🌍 Sosyal</button><p id="dersIcerik">Bir derse tıkla, konu anlatımı gelsin!</p></div>
+</div>
+
+<div id="p-sinav" class="page">
+<div class="card"><h3>📝 Sınav</h3><p id="soru">5 + 7 = ?</p><div id="sinavButonlar"><button onclick="cevapVer(12)">12</button><button onclick="cevapVer(13)">13</button><button onclick="cevapVer(11)">11</button></div><p id="sinavSonuc"></p><button onclick="yeniSoru()">Yeni Soru ➡️</button></div>
+</div>
+
+<div id="p-ai" class="page">
+<div class="card"><h3>🤖 ArdaBot</h3><p id="aiCevap">Selam Arda! Bana soru sor, cevaplayayım.</p><input id="aiSoru" placeholder="Örn: 5x5 kaç?"><button onclick="aiSor()">Sor</button></div>
+</div>
+
+<div id="p-oyun" class="page">
+<div class="card"><h3>⚡ Hızlı Matematik</h3><p id="hizliSoru">8 x 6 = ?</p><div id="hizliButonlar"><button onclick="hizliCevap(48)">48</button><button onclick="hizliCevap(42)">42</button><button onclick="hizliCevap(54)">54</button></div><p id="hizliSonuc"></p></div>
+<div class="card"><h3>✊ Taş - Kağıt - Makas</h3><button onclick="tkm('taş')">🪨 Taş</button><button onclick="tkm('kağıt')">📄 Kağıt</button><button onclick="tkm('makas')">✂️ Makas</button><p id="tkmSonuc"></p></div>
+<div class="card"><h3>🛒 Dükkan</h3>
+<div class="shop-item">⚔️ 300 SIFIR KILICI - 300 Coin <button onclick="satinAl('300 SIFIR KILICI',300)">Al</button></div>
+<div class="shop-item">🌌 GOOGOL KILICI - 1000 Coin <button onclick="satinAl('GOOGOL KILICI',1000)">Al</button></div>
+<div class="shop-item">🔥 ATEŞ KILICI - 500 Coin <button onclick="satinAl('ATEŞ KILICI',500)">Al</button></div>
+<p id="envanter">Envanter: Boş</p></div>
+</div>
+
+<div id="p-profil" class="page">
+<div class="card"><h3>👤 Profil</h3><p>İsim: ARDA</p><p>Puan: 5e+99</p><p>Coin: <span id="coin2">1000</span></p><p>Seviye: EFSANE 🔥</p><button onclick="yedekle()">💾 Yedeği Kaydet</button></div>
+</div>
+
+<div class="nav">
+<button class="active" onclick="sayfa('ana',this)">🏠 Ana</button>
+<button onclick="sayfa('ders',this)">📚 Ders</button>
+<button onclick="sayfa('sinav',this)">📝 Sınav</button>
+<button onclick="sayfa('ai',this)">🤖 AI</button>
+<button onclick="sayfa('oyun',this)">🎮 Oyun</button>
+<button onclick="sayfa('profil',this)">👤 Profil</button>
+</div>
+
+<script>
+let coin=1000; let envanter=[]; let a=5,b=7; let hizliDogru=48;
+function sayfa(ad,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('p-'+ad).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+function guncelle(){document.getElementById('coin').innerText=coin;document.getElementById('coin2').innerText=coin;}
+function kodKullan(){let k=document.getElementById('kodInput').value.toUpperCase();if(k==='ARDA10000'){coin+=20;guncelle();document.getElementById('kodSonuc').innerText='✅ +20 Coin kazandın!';}else{document.getElementById('kodSonuc').innerText='❌ Kod yanlış!';}}
+function petBesle(){document.getElementById('petDurum').innerText='Mutluluk: 100 | Açlık: 0 - Karnı doydu! 🐶';coin+=5;guncelle();}
+function petSev(){document.getElementById('petDurum').innerText='ArdaPet çok mutlu oldu! ❤️ +5 Coin';coin+=5;guncelle();}
+let pets=['🐶','🐱','🦖','🐉','🦊'];let pi=0;function petDegistir(){pi=(pi+1)%pets.length;document.getElementById('petEmoji').innerText=pets[pi];}
+function dersAc(d){document.getElementById('dersIcerik').innerText=d+' dersi açıldı! Konu: '+d+' için çalışmaya başla. +10 Coin';coin+=10;guncelle();}
+// DÜZELTİLDİ: Artık şıklar soruya göre değişiyor
+function yeniSoru(){a=Math.floor(Math.random()*20)+1;b=Math.floor(Math.random()*20)+1;let dogru=a+b;let s1=dogru+1;let s2=dogru-1;let siklar=[dogru,s1,s2].sort(()=>Math.random()-0.5);document.getElementById('soru').innerText=a+' + '+b+' = ?';document.getElementById('sinavButonlar').innerHTML=siklar.map(s=>`<button onclick="cevapVer(${s})">${s}</button>`).join('');document.getElementById('sinavSonuc').innerText='';}
+function cevapVer(c){if(c===a+b){document.getElementById('sinavSonuc').innerText='✅ Doğru! +10 Coin';coin+=10;guncelle();}else{document.getElementById('sinavSonuc').innerText='❌ Yanlış, cevap '+(a+b);}}
+function aiSor(){let s=document.getElementById('aiSoru').value.toLowerCase();let c='Bunu biraz düşünmeliyim... Ama sen çok zekisin Arda!';if(s.includes('5x5')||s.includes('5*5'))c='5x5 = 25!';if(s.includes('merhaba'))c='Merhaba Arda! Nasılsın?';if(s.includes('kim'))c='Ben ArdaBot, senin en iyi arkadaşın!';document.getElementById('aiCevap').innerText=c;}
+function hizliCevap(c){if(c===hizliDogru){document.getElementById('hizliSonuc').innerText='✅ Hızlısın be! +10 Coin';coin+=10;guncelle();}else{document.getElementById('hizliSonuc').innerText='❌ Yanlış, cevap '+hizliDogru;}}
+function tkm(secim){let arr=['taş','kağıt','makas'];let pc=arr[Math.floor(Math.random()*3)];let sonuc='Berabere! Bilgisayar: '+pc;if((secim==='taş'&&pc==='makas')||(secim==='kağıt'&&pc==='taş')||(secim==='makas'&&pc==='kağıt')){sonuc='🏆 Kazandın! Bilgisayar: '+pc+' +15 Coin';coin+=15;guncelle();}else if(secim!==pc){sonuc='😢 Kaybettin! Bilgisayar: '+pc;}document.getElementById('tkmSonuc').innerText=sonuc;}
+function satinAl(isim,fiyat){if(coin>=fiyat){coin-=fiyat;envanter.push(isim);document.getElementById('envanter').innerText='Envanter: '+envanter.join(', ');guncelle();alert(isim+' satın alındı!');}else{alert('Coin yetersiz! Önce oyun oyna.');}}
+function yedekle(){alert('Yedeğin alındı! Artık silinmez. Bu kodu Drive a da kaydetmeyi unutma!');}
+</script>
+</body>
+  </html>
