@@ -3,86 +3,243 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EBA V10^300</title>
+<title>Arda Bilişim Sınavı</title>
 <style>
-*{box-sizing:border-box;font-family:Arial} body{margin:0;background:#0f172a;color:white;padding-bottom:80px}
-.top{background:linear-gradient(90deg,#7c3aed,#db2777);padding:15px;text-align:center;border-radius:0 0 20px 20px}
-.top h1{margin:0;font-size:22px} .top p{margin:5px 0}
-.card{background:#1e293b;margin:12px;padding:15px;border-radius:15px}
-button{background:#7c3aed;color:white;border:0;padding:10px 15px;border-radius:10px;margin:5px;cursor:pointer;font-weight:bold}
-input,select{padding:10px;border-radius:10px;border:0;width:100%;margin:5px 0;color:black}
-.nav{position:fixed;bottom:0;left:0;right:0;background:#111827;display:flex;justify-content:space-around;padding:10px 0}
-.nav button{background:none;font-size:13px} .nav button.active{color:#facc15}
-.page{display:none} .page.active{display:block}
-.pet{font-size:50px;text-align:center} .shop-item{background:#334155;padding:10px;border-radius:10px;margin:8px 0}
+*{box-sizing:border-box}
+body{margin:0;padding:15px;background:#fff;color:#172033;font-family:Arial,sans-serif}
+.container{max-width:560px;margin:auto}
+header,.card{background:#f5f7fa;border:1px solid #e1e7ef;border-radius:15px;padding:18px;margin-bottom:15px}
+header{text-align:center}
+.school-head{display:flex;align-items:center;gap:12px;text-align:left}
+.school-logo{width:65px;height:65px;object-fit:contain;display:none}
+.school-name{font-size:13px}
+h1{color:#087da8;font-size:23px}
+input,select{width:100%;padding:13px;margin:7px 0;border:1px solid #ccd5df;border-radius:8px;background:white;font-size:16px}
+button{width:100%;padding:13px;margin-top:9px;border:0;border-radius:9px;background:#00bce8;color:#102030;font-size:16px;font-weight:bold}
+.teacher-link{background:#e2eaf2}
+.option{display:block;padding:13px;margin:9px 0;background:#e9eff5;border-radius:8px}
+.option input{width:auto}
+.hidden{display:none}
+.muted{color:#657386}
+.review{background:#edf2f7;padding:12px;border-radius:9px;margin:9px 0}
+.correct{color:green}.wrong{color:#d22}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+td,th{padding:8px;border-bottom:1px solid #ddd;text-align:left}
+#logoFile{display:none}
+.logo-picker{display:inline-block;background:#e5edf5;padding:9px;border-radius:8px;margin:10px}
 </style>
 </head>
 <body>
+<div class="container">
 
-<div class="top">
-<h1>EBA V10^300</h1>
-<p>⭐ Puan: 5e+99 | 🪙 <span id="coin">1000</span></p>
-<p>👤 ARDA | Sınıf: <select id="sinif" style="width:80px;display:inline"><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></p>
+<header>
+<div class="school-head">
+<img id="schoolLogo" class="school-logo" alt="Okul logosu">
+<div class="school-name"><b>ATİKEHANIM ORTAOKULU</b><br>Okul Online Sınav Sistemi</div>
 </div>
+<label class="logo-picker" for="logoFile">📷 Okul logosunu seç</label>
+<input id="logoFile" type="file" accept="image/*">
+<h1>💻 ARDA BİLİŞİM SINAVI</h1>
+<p>5. ve 6. Sınıf Online Sınav Sistemi</p>
+</header>
 
-<div id="p-ana" class="page active">
-<div class="card"><h3>🎁 Kod Gir - Ödül Al</h3><input id="kodInput" placeholder="Kodunu yaz örn: ARDA10000"><button onclick="kodKullan()">Ödül Al +20</button><p id="kodSonuc"></p></div>
-<div class="card"><h3>🐾 ArdaPet</h3><div class="pet" id="petEmoji">🐶</div><p id="petDurum">Mutluluk: 100 | Açlık: 20</p><button onclick="petBesle()">🍖 Besle</button><button onclick="petSev()">❤️ Sev</button><button onclick="petDegistir()">🔄 Pet Değiştir</button></div>
-<div class="card"><h3>🏆 Liderlik Tablosu</h3><p>1. ARDA - 5e+99 ⭐</p><p>2. Efe - 12.400</p><p>3. Elif - 9.800</p><p>4. Mert - 7.200</p></div>
-</div>
+<section class="card" id="login">
+<h2>Öğrenci Bilgileri</h2>
+<input id="ad" placeholder="Adınız">
+<input id="soyad" placeholder="Soyadınız">
+<input id="numara" placeholder="Okul numaranız">
+<select id="sube">
+<option value="">Şubenizi seçin</option>
+<option>5/A</option><option>5/B</option><option>5/C</option><option>5/D</option>
+<option>6/A</option><option>6/B</option><option>6/C</option><option>6/D</option>
+</select>
+<button onclick="basla()">Sınava Başla</button>
+<button class="teacher-link" onclick="ogretmenGiris()">👩‍🏫 Öğretmen Girişi</button>
+</section>
 
-<div id="p-ders" class="page">
-<div class="card"><h3>📚 Dersler</h3><button onclick="dersAc('Matematik')">📐 Matematik</button><button onclick="dersAc('Türkçe')">📖 Türkçe</button><button onclick="dersAc('Fen Bilimleri')">🔬 Fen Bilimleri</button><button onclick="dersAc('İngilizce')">🇬🇧 İngilizce</button><button onclick="dersAc('Sosyal')">🌍 Sosyal</button><p id="dersIcerik">Bir derse tıkla, konu anlatımı gelsin!</p></div>
-</div>
+<section class="card hidden" id="ogretmenLogin">
+<h2>Öğretmen Girişi</h2>
+<input id="ogretmenSifre" type="password" placeholder="Öğretmen şifresi">
+<button onclick="ogretmenKontrol()">Panele Gir</button>
+<button class="teacher-link" onclick="ogretmenGeri()">Geri Dön</button>
+</section>
 
-<div id="p-sinav" class="page">
-<div class="card"><h3>📝 Sınav</h3><p id="soru">5 + 7 = ?</p><div id="sinavButonlar"><button onclick="cevapVer(12)">12</button><button onclick="cevapVer(13)">13</button><button onclick="cevapVer(11)">11</button></div><p id="sinavSonuc"></p><button onclick="yeniSoru()">Yeni Soru ➡️</button></div>
-</div>
+<section class="card hidden" id="ogretmenPanel">
+<h2>📋 Öğretmen Paneli</h2>
+<div id="sonucListesi"></div>
+<button onclick="sonuclariIndir()">Sonuçları CSV İndir</button>
+<button class="teacher-link" onclick="ogretmenCikis()">Çıkış</button>
+</section>
 
-<div id="p-ai" class="page">
-<div class="card"><h3>🤖 ArdaBot</h3><p id="aiCevap">Selam Arda! Bana soru sor, cevaplayayım.</p><input id="aiSoru" placeholder="Örn: 5x5 kaç?"><button onclick="aiSor()">Sor</button></div>
-</div>
+<section class="card hidden" id="sinav">
+<h2 id="baslik"></h2>
+<p id="ogrenci" class="muted"></p>
+<p id="ilerleme"></p>
+<div id="soru"></div>
+<button onclick="onceki()" id="geri">Önceki Soru</button>
+<button onclick="sonraki()">Sonraki Soru</button>
+<button onclick="bitir()" style="background:#36d98b">Sınavı Bitir</button>
+</section>
 
-<div id="p-oyun" class="page">
-<div class="card"><h3>⚡ Hızlı Matematik</h3><p id="hizliSoru">8 x 6 = ?</p><div id="hizliButonlar"><button onclick="hizliCevap(48)">48</button><button onclick="hizliCevap(42)">42</button><button onclick="hizliCevap(54)">54</button></div><p id="hizliSonuc"></p></div>
-<div class="card"><h3>✊ Taş - Kağıt - Makas</h3><button onclick="tkm('taş')">🪨 Taş</button><button onclick="tkm('kağıt')">📄 Kağıt</button><button onclick="tkm('makas')">✂️ Makas</button><p id="tkmSonuc"></p></div>
-<div class="card"><h3>🛒 Dükkan</h3>
-<div class="shop-item">⚔️ 300 SIFIR KILICI - 300 Coin <button onclick="satinAl('300 SIFIR KILICI',300)">Al</button></div>
-<div class="shop-item">🌌 GOOGOL KILICI - 1000 Coin <button onclick="satinAl('GOOGOL KILICI',1000)">Al</button></div>
-<div class="shop-item">🔥 ATEŞ KILICI - 500 Coin <button onclick="satinAl('ATEŞ KILICI',500)">Al</button></div>
-<p id="envanter">Envanter: Boş</p></div>
-</div>
-
-<div id="p-profil" class="page">
-<div class="card"><h3>👤 Profil</h3><p>İsim: ARDA</p><p>Puan: 5e+99</p><p>Coin: <span id="coin2">1000</span></p><p>Seviye: EFSANE 🔥</p><button onclick="yedekle()">💾 Yedeği Kaydet</button></div>
-</div>
-
-<div class="nav">
-<button class="active" onclick="sayfa('ana',this)">🏠 Ana</button>
-<button onclick="sayfa('ders',this)">📚 Ders</button>
-<button onclick="sayfa('sinav',this)">📝 Sınav</button>
-<button onclick="sayfa('ai',this)">🤖 AI</button>
-<button onclick="sayfa('oyun',this)">🎮 Oyun</button>
-<button onclick="sayfa('profil',this)">👤 Profil</button>
+<section class="card hidden" id="sonuc">
+<h2>🏆 Sınav Sonucu</h2>
+<h3 id="isim"></h3>
+<h1 id="puan"></h1>
+<p id="dogru"></p>
+<p id="yanlis"></p>
+<div id="inceleme"></div>
+<button onclick="location.reload()">Yeniden Sınav</button>
+</section>
 </div>
 
 <script>
-let coin=1000; let envanter=[]; let a=5,b=7; let hizliDogru=48;
-function sayfa(ad,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('p-'+ad).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
-function guncelle(){document.getElementById('coin').innerText=coin;document.getElementById('coin2').innerText=coin;}
-function kodKullan(){let k=document.getElementById('kodInput').value.toUpperCase();if(k==='ARDA10000'){coin+=20;guncelle();document.getElementById('kodSonuc').innerText='✅ +20 Coin kazandın!';}else{document.getElementById('kodSonuc').innerText='❌ Kod yanlış!';}}
-function petBesle(){document.getElementById('petDurum').innerText='Mutluluk: 100 | Açlık: 0 - Karnı doydu! 🐶';coin+=5;guncelle();}
-function petSev(){document.getElementById('petDurum').innerText='ArdaPet çok mutlu oldu! ❤️ +5 Coin';coin+=5;guncelle();}
-let pets=['🐶','🐱','🦖','🐉','🦊'];let pi=0;function petDegistir(){pi=(pi+1)%pets.length;document.getElementById('petEmoji').innerText=pets[pi];}
-function dersAc(d){document.getElementById('dersIcerik').innerText=d+' dersi açıldı! Konu: '+d+' için çalışmaya başla. +10 Coin';coin+=10;guncelle();}
-// DÜZELTİLDİ: Artık şıklar soruya göre değişiyor
-function yeniSoru(){a=Math.floor(Math.random()*20)+1;b=Math.floor(Math.random()*20)+1;let dogru=a+b;let s1=dogru+1;let s2=dogru-1;let siklar=[dogru,s1,s2].sort(()=>Math.random()-0.5);document.getElementById('soru').innerText=a+' + '+b+' = ?';document.getElementById('sinavButonlar').innerHTML=siklar.map(s=>`<button onclick="cevapVer(${s})">${s}</button>`).join('');document.getElementById('sinavSonuc').innerText='';}
-function cevapVer(c){if(c===a+b){document.getElementById('sinavSonuc').innerText='✅ Doğru! +10 Coin';coin+=10;guncelle();}else{document.getElementById('sinavSonuc').innerText='❌ Yanlış, cevap '+(a+b);}}
-function aiSor(){let s=document.getElementById('aiSoru').value.toLowerCase();let c='Bunu biraz düşünmeliyim... Ama sen çok zekisin Arda!';if(s.includes('5x5')||s.includes('5*5'))c='5x5 = 25!';if(s.includes('merhaba'))c='Merhaba Arda! Nasılsın?';if(s.includes('kim'))c='Ben ArdaBot, senin en iyi arkadaşın!';document.getElementById('aiCevap').innerText=c;}
-function hizliCevap(c){if(c===hizliDogru){document.getElementById('hizliSonuc').innerText='✅ Hızlısın be! +10 Coin';coin+=10;guncelle();}else{document.getElementById('hizliSonuc').innerText='❌ Yanlış, cevap '+hizliDogru;}}
-function tkm(secim){let arr=['taş','kağıt','makas'];let pc=arr[Math.floor(Math.random()*3)];let sonuc='Berabere! Bilgisayar: '+pc;if((secim==='taş'&&pc==='makas')||(secim==='kağıt'&&pc==='taş')||(secim==='makas'&&pc==='kağıt')){sonuc='🏆 Kazandın! Bilgisayar: '+pc+' +15 Coin';coin+=15;guncelle();}else if(secim!==pc){sonuc='😢 Kaybettin! Bilgisayar: '+pc;}document.getElementById('tkmSonuc').innerText=sonuc;}
-function satinAl(isim,fiyat){if(coin>=fiyat){coin-=fiyat;envanter.push(isim);document.getElementById('envanter').innerText='Envanter: '+envanter.join(', ');guncelle();alert(isim+' satın alındı!');}else{alert('Coin yetersiz! Önce oyun oyna.');}}
-function yedekle(){alert('Yedeğin alındı! Artık silinmez. Bu kodu Drive a da kaydetmeyi unutma!');}
+document.getElementById("logoFile").addEventListener("change",e=>{
+ const f=e.target.files[0];if(!f)return;
+ const r=new FileReader();
+ r.onload=()=>{let i=document.getElementById("schoolLogo");i.src=r.result;i.style.display="block"};
+ r.readAsDataURL(f);
+});
+
+const sorular={
+5:[
+["Bilgisayarın fiziksel parçalarına ne denir?",["Yazılım","Donanım","İnternet","Dosya"],1],
+["Aşağıdakilerden hangisi giriş birimidir?",["Monitör","Yazıcı","Klavye","Hoparlör"],2],
+["Bilgisayarın temel işlem merkezi hangisidir?",["İşlemci","Fare","Ekran","Yazıcı"],0],
+["İnternet ne için kullanılabilir?",["Bilgi paylaşımı","Sadece oyun","Bilgisayarı kapatma","Yazdırma"],0],
+["Güçlü şifre hangisidir?",["123456","abcdef","Arda2026!X","111111"],2],
+["Dosyaları düzenli tutmak için ne kullanılır?",["Klasör","Hoparlör","Fare","Mikrofon"],0],
+["Aşağıdakilerden hangisi yazılımdır?",["Klavye","Windows","Fare","Ekran"],1],
+["Kişisel bilgilerimizi internette nasıl korumalıyız?",["Herkese vermeliyiz","Gereksiz yere paylaşmamalıyız","Yayınlamalıyız","Şifreyi göndermeliyiz"],1],
+["Silinen dosyalar genellikle nereye gider?",["Masaüstü","Geri Dönüşüm Kutusu","İndirilenler","Belgeler"],1],
+["Bilgisayarda yazı yazmak için hangisi kullanılır?",["Klavye","Hoparlör","Yazıcı","Monitör"],0],
+["Algoritma nedir?",["Bir işi çözmek için sıralı adımlar","Bilgisayar parçası","Oyun türü","Dosya adı"],0],
+["E-posta ne için kullanılır?",["Elektronik mesaj göndermek","Bilgisayarı açmak","Resim çizmek","Ses dinlemek"],0],
+["Aşağıdakilerden hangisi çıkış birimidir?",["Fare","Klavye","Monitör","Mikrofon"],2],
+["Siber zorbalık nedir?",["İnternette birini rahatsız etmek","Ders çalışmak","Araştırma yapmak","Dosya kaydetmek"],0],
+["Bilgisayar virüsü nedir?",["Zararlı yazılım","Donanım","Klavye","Ekran"],0],
+["İnternette güvenli davranış hangisidir?",["Şifreyi paylaşmak","Bilinmeyen bağlantıya basmak","Güvenilir siteleri kullanmak","Adresini herkese vermek"],2],
+["Sunum hazırlamak için hangisi kullanılabilir?",["PowerPoint","Hesap makinesi","Mikrofon","Fare"],0],
+["Bilgisayarda ses dinlemek için hangisi kullanılır?",["Hoparlör","Klavye","Tarayıcı","Yazıcı"],0]
+],
+6:[
+["Bilgisayarın temel işlem birimi hangisidir?",["RAM","CPU","USB","Ekran"],1],
+["RAM ne işe yarar?",["Çalışma sırasında verileri geçici tutar","Yazı yazdırır","Ses çıkarır","İnternete bağlar"],0],
+["Aşağıdakilerden hangisi işletim sistemidir?",["Windows","Klavye","Fare","Monitör"],0],
+["İnternet tarayıcısı hangisidir?",["Chrome","Word","Paint","Excel"],0],
+["Algoritma ne demektir?",["Adım adım işlem sırası","Bilgisayar oyunu","Donanım parçası","İnternet adresi"],0],
+["Akış şeması neyi gösterir?",["İşlem adımlarını","Bilgisayar rengini","Dosya boyutunu","Şifreyi"],0],
+["Güvenli internet kullanımı hangisidir?",["Şifre paylaşmak","Bilinmeyen dosya indirmek","Güçlü şifre kullanmak","Adresini herkese vermek"],2],
+["Telif hakkı neyi korur?",["Eser sahibinin haklarını","Bilgisayar hızını","İnternet bağlantısını","Klavye tuşlarını"],0],
+["Kimlik avı nedir?",["Kişisel bilgileri kandırarak ele geçirme girişimi","Oyun türü","Dosya biçimi","Yazıcı modeli"],0],
+["Veri nedir?",["İşlenebilecek bilgi veya ölçüm","Bilgisayar kasası","Fare","Ekran"],0],
+["İkili sayı sisteminde hangi rakamlar kullanılır?",["0 ve 1","1 ve 2","0 ve 2","2 ve 3"],0],
+["1 byte kaç bittir?",["4","8","16","32"],1],
+["Elektronik tablo hazırlamak için hangisi kullanılır?",["Excel","Paint","Chrome","Not Defteri"],0],
+["Sunum hazırlamak için hangisi kullanılır?",["PowerPoint","Chrome","Windows","Hesap makinesi"],0],
+["Dosya uzantısı genellikle neyi belirtir?",["Dosya türünü","Ekran boyutunu","Şifreyi","Kullanıcı adını"],0],
+["Verileri kaybetmemek için ne yapılmalıdır?",["Yedekleme","Rastgele silme","Şifreyi paylaşma","Bilinmeyen dosya indirme"],0],
+["Bilgisayar ağı nedir?",["Birbirine bağlı cihazlar topluluğu","Tek klavye","Bir program","Bir dosya"],0],
+["LAN neyi ifade eder?",["Yerel alan ağı","Geniş alan ağı","İnternet sitesi","İşlemci"],0],
+["Arama motoru hangisidir?",["Google","Word","Paint","Excel"],0],
+["Dijital erişilebilirlik neyi amaçlar?",["Teknolojinin farklı ihtiyaçları olan kişilerce kullanılabilmesini","Bilgisayarı kapatmayı","Dosya silmeyi","Oyun yapmayı"],0],
+["Siber zorbalıkla karşılaşınca ne yapılmalıdır?",["Güvenilir bir yetişkine bildirmek","Karşılık vermek","Gizlemek","Yaymak"],0],
+["Güncellemeler neden yapılır?",["Güvenlik ve iyileştirmeler için","Dosyaları rastgele silmek için","Şifreyi paylaşmak için","Ekranı kapatmak için"],0],
+["Açık kaynak yazılım ne anlama gelir?",["Kaynak kodu incelemeye açık yazılım","Sadece ücretli yazılım","Virüs","Donanım"],0],
+["Bulut depolama ne sağlar?",["İnternet üzerinden dosya saklama","Ekranı büyütme","Ses yükseltme","Yazdırma"],0],
+["Güçlü şifre nasıl olmalıdır?",["Tahmin edilmesi zor ve farklı karakterler içeren","Sadece 1234","Herkesin bildiği","Ad-soyaddan oluşan"],0],
+["Robotların çevreyi algılamasında ne kullanılır?",["Sensör","Yazıcı","Hoparlör","Klavye"],0],
+["Programlama nedir?",["Bilgisayara belirli komutlar verme","Dosya yazdırma","Ekran temizleme","İnternet kapatma"],0],
+["Koşul yapısı ne işe yarar?",["Bir koşula göre farklı işlem yapar","Sesi artırır","Dosya siler","Ekranı kapatır"],0],
+["Döngü yapısı ne işe yarar?",["Komutları tekrarlar","Bilgisayarı kapatır","Şifre değiştirir","Dosya taşır"],0],
+["Yapay zekâ ne yapabilir?",["Verilerden örüntüler öğrenip tahmin üretebilir","Sadece yazdırır","Klavye görevi görür","Elektrik üretir"],0]
+]
+};
+
+let liste=[],index=0,cevaplar=[],ogrenci={};
+const OGRETMEN_SIFRESI="ogretmen2026";
+
+function sonuclariOku(){
+ try{return JSON.parse(localStorage.getItem("ardaSinavSonuclari")||"[]")}
+ catch(e){return []}
+}
+function ogretmenGiris(){
+ login.classList.add("hidden");ogretmenLogin.classList.remove("hidden");
+}
+function ogretmenGeri(){
+ ogretmenLogin.classList.add("hidden");login.classList.remove("hidden");
+}
+function ogretmenKontrol(){
+ if(ogretmenSifre.value!==OGRETMEN_SIFRESI){alert("Şifre yanlış.");return}
+ ogretmenLogin.classList.add("hidden");ogretmenPanel.classList.remove("hidden");sonuclariGoster();
+}
+function ogretmenCikis(){
+ ogretmenPanel.classList.add("hidden");login.classList.remove("hidden");ogretmenSifre.value="";
+}
+function sonuclariGoster(){
+ const arr=sonuclariOku();
+ if(!arr.length){sonucListesi.innerHTML="<p>Henüz kayıtlı sonuç yok.</p>";return}
+ sonucListesi.innerHTML='<div class="table-wrap"><table><tr><th>Öğrenci</th><th>Sınıf</th><th>Doğru</th><th>Yanlış</th><th>Puan</th></tr>'+
+ arr.map(x=>`<tr><td>${guvenli(x.ad)}</td><td>${guvenli(x.sube)}</td><td>${x.dogru}</td><td>${x.yanlis}</td><td>${x.puan}</td></tr>`).join("")+'</table></div>';
+}
+function sonuclariIndir(){
+ const arr=sonuclariOku();
+ if(!arr.length){alert("İndirilecek sonuç yok.");return}
+ let csv="Ad Soyad;Numara;Sınıf;Doğru;Yanlış;Puan\n";
+ arr.forEach(x=>csv+=`${x.ad};${x.numara};${x.sube};${x.dogru};${x.yanlis};${x.puan}\n`);
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"}));
+ a.download="sinav-sonuclari.csv";a.click();URL.revokeObjectURL(a.href);
+}
+function guvenli(v){
+ return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function basla(){
+ const ad=document.getElementById("ad").value.trim();
+ const soyad=document.getElementById("soyad").value.trim();
+ const numara=document.getElementById("numara").value.trim();
+ const sube=document.getElementById("sube").value;
+ if(!ad||!soyad||!numara||!sube){alert("Lütfen bütün bilgileri doldurun.");return}
+ ogrenci={ad:ad+" "+soyad,numara,sube};
+ liste=sorular[sube[0]];
+ cevaplar=Array(liste.length).fill(null);index=0;
+ login.classList.add("hidden");sinav.classList.remove("hidden");
+ baslik.textContent=sube[0]+". Sınıf Bilişim Teknolojileri Sınavı";
+ ogrenciBilgi.textContent=ogrenci.ad+" | "+sube;
+ soruGoster();
+}
+function soruGoster(){
+ const s=liste[index];
+ ilerleme.textContent=`Soru ${index+1} / ${liste.length}`;
+ let html=`<h3>${index+1}. ${s[0]}</h3>`;
+ s[1].forEach((secenek,i)=>{
+ html+=`<label class="option"><input type="radio" name="cevap" value="${i}" ${cevaplar[index]===i?"checked":""} onchange="cevaplar[index]=${i}"> ${secenek}</label>`;
+ });
+ soru.innerHTML=html;
+ geri.disabled=index===0;
+}
+function onceki(){if(index>0){index--;soruGoster()}}
+function sonraki(){if(index<liste.length-1){index++;soruGoster()}}
+function bitir(){
+ if(!confirm("Sınavı bitirmek istiyor musunuz?"))return;
+ let dogru=0,yanlis=0,incelemeHTML="";
+ liste.forEach((s,i)=>{
+ if(cevaplar[i]===s[2])dogru++;else yanlis++;
+ if(cevaplar[i]!==s[2]){
+ incelemeHTML+=`<div class="review"><b>${i+1}. ${s[0]}</b><p class="wrong">Senin cevabın: ${cevaplar[i]===null?"Boş":s[1][cevaplar[i]]}</p><p class="correct">Doğru cevap: ${s[1][s[2]]}</p></div>`;
+ }
+ });
+ const puan=Math.round(dogru/liste.length*100);
+ const kayit={...ogrenci,dogru,yanlis,puan,tarih:new Date().toLocaleString("tr-TR")};
+ const arr=sonuclariOku();arr.push(kayit);
+ try{localStorage.setItem("ardaSinavSonuclari",JSON.stringify(arr))}catch(e){}
+ sinav.classList.add("hidden");sonuc.classList.remove("hidden");
+ isim.textContent=ogrenci.ad;
+ document.getElementById("puan").textContent=puan+" PUAN";
+ document.getElementById("dogru").textContent="Doğru: "+dogru;
+ document.getElementById("yanlis").textContent="Yanlış / Boş: "+yanlis;
+ inceleme.innerHTML=incelemeHTML||"<p class='correct'>Tebrikler, bütün sorular doğru!</p>";
+}
 </script>
 </body>
   </html>
