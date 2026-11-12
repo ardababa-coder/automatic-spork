@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -16,6 +17,7 @@ header{text-align:center}
 h1{color:#087da8;font-size:23px}
 input,select{width:100%;padding:13px;margin:7px 0;border:1px solid #ccd5df;border-radius:8px;background:white;font-size:16px}
 button{width:100%;padding:13px;margin-top:9px;border:0;border-radius:9px;background:#00bce8;color:#102030;font-size:16px;font-weight:bold}
+button:disabled{opacity:.45}
 .teacher-link{background:#e2eaf2}
 .option{display:block;padding:13px;margin:9px 0;background:#e9eff5;border-radius:8px}
 .option input{width:auto}
@@ -28,17 +30,17 @@ table{width:100%;border-collapse:collapse;font-size:13px}
 td,th{padding:8px;border-bottom:1px solid #ddd;text-align:left}
 #logoFile{display:none}
 .logo-picker{display:inline-block;background:#e5edf5;padding:9px;border-radius:8px;margin:10px}
+.soru-foto{display:block;width:100%;max-height:210px;object-fit:cover;border-radius:12px;margin:10px 0;background:#e9eff5}
 </style>
 </head>
 <body>
 <div class="container">
-
 <header>
 <div class="school-head">
 <img id="schoolLogo" class="school-logo" alt="Okul logosu">
 <div class="school-name"><b>ATİKEHANIM ORTAOKULU</b><br>Okul Online Sınav Sistemi</div>
 </div>
-<label class="logo-picker" for="logoFile">📷 Okul logosunu seç</label>
+<label class="logo-picker" for="logoFile">📷 Okul logosunu telefondan seç</label>
 <input id="logoFile" type="file" accept="image/*">
 <h1>💻 ARDA BİLİŞİM SINAVI</h1>
 <p>5. ve 6. Sınıf Online Sınav Sistemi</p>
@@ -74,7 +76,7 @@ td,th{padding:8px;border-bottom:1px solid #ddd;text-align:left}
 
 <section class="card hidden" id="sinav">
 <h2 id="baslik"></h2>
-<p id="ogrenci" class="muted"></p>
+<p id="ogrenciBilgi" class="muted"></p>
 <p id="ilerleme"></p>
 <div id="soru"></div>
 <button onclick="onceki()" id="geri">Önceki Soru</button>
@@ -97,7 +99,7 @@ td,th{padding:8px;border-bottom:1px solid #ddd;text-align:left}
 document.getElementById("logoFile").addEventListener("change",e=>{
  const f=e.target.files[0];if(!f)return;
  const r=new FileReader();
- r.onload=()=>{let i=document.getElementById("schoolLogo");i.src=r.result;i.style.display="block"};
+ r.onload=()=>{const i=document.getElementById("schoolLogo");i.src=r.result;i.style.display="block"};
  r.readAsDataURL(f);
 });
 
@@ -156,67 +158,63 @@ const sorular={
 ]
 };
 
-let liste=[],index=0,cevaplar=[],ogrenci={};
 const OGRETMEN_SIFRESI="ogretmen2026";
+let liste=[],index=0,cevaplar=[],ogrenci={};
 
 function sonuclariOku(){
  try{return JSON.parse(localStorage.getItem("ardaSinavSonuclari")||"[]")}
  catch(e){return []}
 }
-function ogretmenGiris(){
- login.classList.add("hidden");ogretmenLogin.classList.remove("hidden");
-}
-function ogretmenGeri(){
- ogretmenLogin.classList.add("hidden");login.classList.remove("hidden");
-}
+function ogretmenGiris(){document.getElementById("login").classList.add("hidden");document.getElementById("ogretmenLogin").classList.remove("hidden")}
+function ogretmenGeri(){document.getElementById("ogretmenLogin").classList.add("hidden");document.getElementById("login").classList.remove("hidden")}
 function ogretmenKontrol(){
- if(ogretmenSifre.value!==OGRETMEN_SIFRESI){alert("Şifre yanlış.");return}
- ogretmenLogin.classList.add("hidden");ogretmenPanel.classList.remove("hidden");sonuclariGoster();
+ if(document.getElementById("ogretmenSifre").value!==OGRETMEN_SIFRESI){alert("Şifre yanlış.");return}
+ document.getElementById("ogretmenLogin").classList.add("hidden");
+ document.getElementById("ogretmenPanel").classList.remove("hidden");sonuclariGoster();
 }
 function ogretmenCikis(){
- ogretmenPanel.classList.add("hidden");login.classList.remove("hidden");ogretmenSifre.value="";
+ document.getElementById("ogretmenPanel").classList.add("hidden");
+ document.getElementById("login").classList.remove("hidden");
+ document.getElementById("ogretmenSifre").value="";
 }
+function guvenli(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function sonuclariGoster(){
- const arr=sonuclariOku();
- if(!arr.length){sonucListesi.innerHTML="<p>Henüz kayıtlı sonuç yok.</p>";return}
- sonucListesi.innerHTML='<div class="table-wrap"><table><tr><th>Öğrenci</th><th>Sınıf</th><th>Doğru</th><th>Yanlış</th><th>Puan</th></tr>'+
+ const arr=sonuclariOku(),alan=document.getElementById("sonucListesi");
+ if(!arr.length){alan.innerHTML="<p>Henüz kayıtlı sonuç yok.</p>";return}
+ alan.innerHTML='<div class="table-wrap"><table><tr><th>Öğrenci</th><th>Sınıf</th><th>Doğru</th><th>Yanlış/Boş</th><th>Puan</th></tr>'+
  arr.map(x=>`<tr><td>${guvenli(x.ad)}</td><td>${guvenli(x.sube)}</td><td>${x.dogru}</td><td>${x.yanlis}</td><td>${x.puan}</td></tr>`).join("")+'</table></div>';
 }
 function sonuclariIndir(){
- const arr=sonuclariOku();
- if(!arr.length){alert("İndirilecek sonuç yok.");return}
- let csv="Ad Soyad;Numara;Sınıf;Doğru;Yanlış;Puan\n";
- arr.forEach(x=>csv+=`${x.ad};${x.numara};${x.sube};${x.dogru};${x.yanlis};${x.puan}\n`);
- const a=document.createElement("a");
- a.href=URL.createObjectURL(new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"}));
+ const arr=sonuclariOku();if(!arr.length){alert("İndirilecek sonuç yok.");return}
+ let csv="Ad Soyad;Numara;Sınıf;Doğru;Yanlış/Boş;Puan;Tarih\n";
+ arr.forEach(x=>csv+=`${x.ad};${x.numara};${x.sube};${x.dogru};${x.yanlis};${x.puan};${x.tarih}\n`);
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"}));
  a.download="sinav-sonuclari.csv";a.click();URL.revokeObjectURL(a.href);
 }
-function guvenli(v){
- return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
 function basla(){
- const ad=document.getElementById("ad").value.trim();
- const soyad=document.getElementById("soyad").value.trim();
- const numara=document.getElementById("numara").value.trim();
- const sube=document.getElementById("sube").value;
+ const ad=document.getElementById("ad").value.trim(),soyad=document.getElementById("soyad").value.trim();
+ const numara=document.getElementById("numara").value.trim(),sube=document.getElementById("sube").value;
  if(!ad||!soyad||!numara||!sube){alert("Lütfen bütün bilgileri doldurun.");return}
- ogrenci={ad:ad+" "+soyad,numara,sube};
- liste=sorular[sube[0]];
+ ogrenci={ad:ad+" "+soyad,numara,sube};liste=sorular[sube[0]];
  cevaplar=Array(liste.length).fill(null);index=0;
- login.classList.add("hidden");sinav.classList.remove("hidden");
- baslik.textContent=sube[0]+". Sınıf Bilişim Teknolojileri Sınavı";
- ogrenciBilgi.textContent=ogrenci.ad+" | "+sube;
- soruGoster();
+ document.getElementById("login").classList.add("hidden");document.getElementById("sinav").classList.remove("hidden");
+ document.getElementById("baslik").textContent=sube[0]+". Sınıf Bilişim Teknolojileri Sınavı";
+ document.getElementById("ogrenciBilgi").textContent=ogrenci.ad+" | "+sube;soruGoster();
 }
 function soruGoster(){
- const s=liste[index];
- ilerleme.textContent=`Soru ${index+1} / ${liste.length}`;
- let html=`<h3>${index+1}. ${s[0]}</h3>`;
- s[1].forEach((secenek,i)=>{
- html+=`<label class="option"><input type="radio" name="cevap" value="${i}" ${cevaplar[index]===i?"checked":""} onchange="cevaplar[index]=${i}"> ${secenek}</label>`;
- });
- soru.innerHTML=html;
- geri.disabled=index===0;
+ const s=liste[index],metin=s[0].toLocaleLowerCase("tr-TR");
+ document.getElementById("ilerleme").textContent=`Soru ${index+1} / ${liste.length}`;
+ let foto="https://images.unsplash.com/photo-1518770660439-4636190af475?w=900";
+ if(metin.includes("klavye")||metin.includes("yazı"))foto="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=900";
+ else if(metin.includes("robot")||metin.includes("sensör"))foto="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=900";
+ else if(metin.includes("şifre")||metin.includes("güven")||metin.includes("zorbalık")||metin.includes("kimlik avı"))foto="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=900";
+ else if(metin.includes("internet")||metin.includes("ağ")||metin.includes("tarayıcı")||metin.includes("arama motoru"))foto="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=900";
+ else if(metin.includes("program")||metin.includes("algoritma")||metin.includes("döngü")||metin.includes("koşul")||metin.includes("akış şeması"))foto="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900";
+ else if(metin.includes("sunum")||metin.includes("veri")||metin.includes("excel"))foto="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900";
+ let html=`<h3>${index+1}. ${s[0]}</h3><img class="soru-foto" src="${foto}" alt="Bilişim konusu görseli" loading="lazy" onerror="this.style.display='none'">`;
+ s[1].forEach((secenek,i)=>{html+=`<label class="option"><input type="radio" name="cevap" value="${i}" ${cevaplar[index]===i?"checked":""} onchange="cevaplar[index]=${i}"> ${secenek}</label>`});
+ document.getElementById("soru").innerHTML=html;
+ document.getElementById("geri").disabled=index===0;
 }
 function onceki(){if(index>0){index--;soruGoster()}}
 function sonraki(){if(index<liste.length-1){index++;soruGoster()}}
@@ -226,20 +224,21 @@ function bitir(){
  liste.forEach((s,i)=>{
  if(cevaplar[i]===s[2])dogru++;else yanlis++;
  if(cevaplar[i]!==s[2]){
- incelemeHTML+=`<div class="review"><b>${i+1}. ${s[0]}</b><p class="wrong">Senin cevabın: ${cevaplar[i]===null?"Boş":s[1][cevaplar[i]]}</p><p class="correct">Doğru cevap: ${s[1][s[2]]}</p></div>`;
+ const verilen=cevaplar[i]===null?"Boş":s[1][cevaplar[i]];
+ incelemeHTML+=`<div class="review"><b>${i+1}. ${s[0]}</b><p class="wrong">Senin cevabın: ${guvenli(verilen)}</p><p class="correct">Doğru cevap: ${guvenli(s[1][s[2]])}</p></div>`;
  }
  });
- const puan=Math.round(dogru/liste.length*100);
- const kayit={...ogrenci,dogru,yanlis,puan,tarih:new Date().toLocaleString("tr-TR")};
+ const puan=Math.round(dogru/liste.length*100),kayit={...ogrenci,dogru,yanlis,puan,tarih:new Date().toLocaleString("tr-TR")};
  const arr=sonuclariOku();arr.push(kayit);
- try{localStorage.setItem("ardaSinavSonuclari",JSON.stringify(arr))}catch(e){}
- sinav.classList.add("hidden");sonuc.classList.remove("hidden");
- isim.textContent=ogrenci.ad;
+ try{localStorage.setItem("ardaSinavSonuclari",JSON.stringify(arr))}catch(e){alert("Sonuç bu cihazda kaydedilemedi.")}
+ document.getElementById("sinav").classList.add("hidden");document.getElementById("sonuc").classList.remove("hidden");
+ document.getElementById("isim").textContent=ogrenci.ad;
  document.getElementById("puan").textContent=puan+" PUAN";
  document.getElementById("dogru").textContent="Doğru: "+dogru;
  document.getElementById("yanlis").textContent="Yanlış / Boş: "+yanlis;
- inceleme.innerHTML=incelemeHTML||"<p class='correct'>Tebrikler, bütün sorular doğru!</p>";
+ document.getElementById("inceleme").innerHTML=incelemeHTML||"<p class='correct'>Tebrikler, bütün sorular doğru!</p>";
 }
 </script>
 </body>
-  </html>
+ </html>
+ 
